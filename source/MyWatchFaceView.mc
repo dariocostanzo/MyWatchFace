@@ -1,17 +1,15 @@
-using Toybox.WatchUi;
-using Toybox.Graphics;
-using Toybox.System;
-using Toybox.Lang;
+using Toybox.WatchUi as Ui;
+using Toybox.Graphics as Gfx;
+using Toybox.System as Sys;
+using Toybox.Lang as Lang;
 
-class MyWatchFaceView extends WatchUi.WatchFace {
+class MyWatchFaceView extends Ui.WatchFace {
 
-    function initialize() {
-        WatchFace.initialize();
-    }
+    var customFont = null;
 
     // Load your resources here
     function onLayout(dc) {
-        setLayout(Rez.Layouts.WatchFace(dc));
+        customFont = Ui.loadResource(Rez.Fonts.customFont);
     }
 
     // Called when this View is brought to the foreground. Restore
@@ -22,16 +20,25 @@ class MyWatchFaceView extends WatchUi.WatchFace {
 
     // Update the view
     function onUpdate(dc) {
-        // Get and show the current time
+        dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_BLACK);
+        dc.clear();
         var clockTime = System.getClockTime();
-        var timeString = Lang.format("$1$:$2$", [clockTime.hour, clockTime.min.format("%02d")]);
-        var view = View.findDrawableById("TimeLabel");
-        view.setText(timeString);
+        var hour = clockTime.hour;
+        if (!Sys.getDeviceSettings().is24Hour) {
+            hour = hour % 12;
+            if (hour == 0){
+                hour = 12;
+            }
+        }
+        dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_BLACK);
+        dc.drawText(dc.getWidth()/2, 22, customFont, hour.toString(), Gfx.TEXT_JUSTIFY_RIGHT);
+        dc.setColor(Gfx.COLOR_RED, Gfx.COLOR_BLACK);
+        dc.drawText(dc.getWidth()/2, 22, customFont, Lang.format("$1$", [clockTime.min.format("%02d")]), Gfx.TEXT_JUSTIFY_LEFT);        
+     }
+        
 
         // Call the parent onUpdate function to redraw the layout
-        View.onUpdate(dc);
-    }
-
+    
     // Called when this View is removed from the screen. Save the
     // state of this View here. This includes freeing resources from
     // memory.
