@@ -40,9 +40,12 @@ class MyWatchFaceView extends Ui.WatchFace {
 	    dc.drawText(dc.getWidth() / 2, 22, customFont, Lang.format("$1$", [clockTime.min.format("%02d")]), Gfx.TEXT_JUSTIFY_LEFT );
 	    dc.setColor(Gfx.COLOR_BLACK, Gfx.COLOR_TRANSPARENT);
 	    dc.drawText(dc.getWidth() / 2, dc.getHeight() / 1.5, Gfx.FONT_TINY, Lang.format("$1$", [clockTime.sec.format("%02d")]), Gfx.TEXT_JUSTIFY_LEFT | Gfx.TEXT_JUSTIFY_VCENTER);
-		dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT);	
-	   	dc.drawText(dc.getWidth() / 2, dc.getHeight() / 2, Gfx.FONT_LARGE, Lang.format("$1$:$2$:$3$", [clockTime.hour.format("%02d"), clockTime.min.format("%02d"), clockTime.sec.format("%02d")]), Gfx.TEXT_JUSTIFY_RIGHT | Gfx.TEXT_JUSTIFY_VCENTER);
+		dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT);
+		dc.drawText(177, 100, Gfx.FONT_TINY, Lang.format("$1$", [clockTime.sec.format("%02d")]), Gfx.TEXT_JUSTIFY_LEFT);
+//		dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT);	
+//	   	dc.drawText(dc.getWidth() / 2, dc.getHeight() / 2, Gfx.FONT_LARGE, Lang.format("$1$:$2$:$3$", [clockTime.hour.format("%02d"), clockTime.min.format("%02d"), clockTime.sec.format("%02d")]), Gfx.TEXT_JUSTIFY_RIGHT | Gfx.TEXT_JUSTIFY_VCENTER);
 	}
+	
 
     function onHide() {
     }
